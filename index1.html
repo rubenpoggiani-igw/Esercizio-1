@@ -50,130 +50,99 @@
 
 
 
-        <div id=barra class="d-flex ms-auto align-self-center">
-            <!--barra di ricerca-->
-            <nav class="navbar bg-ligh">
-                <form class="d-flex ms-5" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-primary" type="submit">Search</button>
-                </form>
-            </nav>
+    <div id=barra class="d-flex ms-auto align-self-center">
+        <!--barra di ricerca-->
+        <nav class="navbar bg-ligh">
+            <form class="d-flex ms-5" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+            </form>
+        </nav>
 
 
 
 
 
+        <!--bottoni-->
+        <div id=bottoni class="d-grid gap-2 d-md-flex justify-content-md-end me-5 ms-auto align-self-center"
+            role="group" aria-label="Basic checkbox toggle button group">
+
+
+            <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+            <label class="btn btn-outline-success" value="connected" for="btncheck1">Connected</label>
 
 
 
+            <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
+            <label class="btn btn-outline-danger" for="btncheck2">Disconnected</label>
 
 
-            <!--bottoni-->
-            <div id=bottoni class="d-grid gap-2 d-md-flex justify-content-md-end me-5 ms-auto align-self-center"
-                role="group" aria-label="Basic checkbox toggle button group">
-
-
-                <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
-                <label class="btn btn-outline-success" value="connected" for="btncheck1">Connected</label>
-
-
-
-                <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
-                <label class="btn btn-outline-danger" for="btncheck2">Disconnected</label>
-
-
-            </div>
         </div>
+    </div>
 
 
 
-        <!--tabella-->
-        <div id="app" class=" p-5 ">
-            <table class="table table-dark border-primary  ">
-                <thead>
-                    <tr>
-                        <th data-field="name">
-                            <span class="text-primary">
-                                name
-                            </span>
-                        </th>
-                        <th data-field="vehicle">
-                            <span class="text-primary">
-                                vehicle
+    <!--tabella-->
+    <div id="app" class=" p-5 ">
+        <table class="table table-dark border-primary  ">
+            <thead>
+                <tr>
+                    <th data-field="name">
+                        <span class="text-primary">
+                            name
+                        </span>
+                    </th>
+                    <th data-field="vehicle">
+                        <span class="text-primary">
+                            vehicle
 
-                            </span>
-                        </th>
-                        <th data-field="status">
-                            <span class="text-primary">
-                                status
-                            </span>
-                        </th>
-                        <th data-field="battery">
-                            <span class="text-primary">
-                                battery
-                            </span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody><!--righe tabella-->
-                    <tr v-for="dispositivo in dispositivi" :key="dispositivo.id">
-                        <td>{{ dispositivo.name }} </td>
-                        <td>{{ dispositivo.vehicle }} </td>
-                        <td>{{ dispositivo.status }} </td>
-                        <td>{{ dispositivo.battery | currencydecimal }} </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                        </span>
+                    </th>
+                    <th data-field="status">
+                        <span class="text-primary">
+                            status
+                        </span>
+                    </th>
+                    <th data-field="battery">
+                        <span class="text-primary">
+                            battery
+                        </span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody><!--righe tabella-->
+                <tr v-for="dispositivo in dispositivi" :key="dispositivo.id">
+                    <td>{{ dispositivo.name }} </td>
+                    <td>{{ dispositivo.vehicle }} </td>
+                    <td>{{ dispositivo.status }} </td>
+                    <td>{{ dispositivo.battery | currencydecimal }} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-        <!--pesca i dati dal file json e li inserisce nella tabella-->
-        <script>
-            new Vue({
-                el: '#app',
-                data() {
-                    return {
-                        dispositivi: []
-                    };
-                },
-                filters: {
-                    currencydecimal(value) {
-                        return value.toFixed(0)
-                    }
-                },
-                mounted() {
-                    axios
-                        .get('https://run.mocky.io/v3/1ac3fe6c-2178-45c5-8bd9-b6710e243b6a')
-                        .then(response => { this.dispositivi = response.data })
-                        .catch(error => console.log(error))
+    <!--pesca i dati dal file json e li inserisce nella tabella-->
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    dispositivi: []
+                };
+            },
+            filters: {
+                currencydecimal(value) {
+                    return value.toFixed(0)
                 }
-            })
-        </script>
-
-
-
-
-
-        <!--
-<div id="example-3">
-    <button v-on:click="say('Da')">:]</button>
-   
-  </div>
-  <script>
-    new Vue({
-  el: '#example-3',
-  methods: {
-    say: function (message) {
-      alert(message)
-    }
-  }
-})
-  </script>
-  
--->
-
-
-
-
+            },
+            mounted() {
+                axios
+                    .get('https://run.mocky.io/v3/1ac3fe6c-2178-45c5-8bd9-b6710e243b6a')
+                    .then(response => { this.dispositivi = response.data })
+                    .catch(error => console.log(error))
+            }
+        })
+    </script>
 
 
 
