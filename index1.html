@@ -42,9 +42,6 @@
         </h6>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 
 
 
@@ -121,6 +118,13 @@
         </table>
     </div>
 
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
     <!--pesca i dati dal file json e li inserisce nella tabella-->
     <script>
         new Vue({
@@ -137,7 +141,7 @@
             },
             mounted() {
                 axios
-                    .get('https://run.mocky.io/v3/1ac3fe6c-2178-45c5-8bd9-b6710e243b6a')
+                    .get('http://localhost:3000/devices')
                     .then(response => { this.dispositivi = response.data })
                     .catch(error => console.log(error))
             }
