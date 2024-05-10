@@ -117,7 +117,7 @@
         function statusTrigger() {
             const connected = document.getElementById('btncheck1').checked;
             const disconnected = document.getElementById('btncheck2').checked;
-
+            
             let status = '';
 
             if (connected && !disconnected) {
@@ -127,55 +127,37 @@
             }
 
             axios.get(`http://localhost:3000/devices?status=${status}`)
-                .then(response => {
+            .then(response => {
                     app.dispositivi = response.data.data;
                 })
                 .catch(error => console.log(error));
         }
 
-
+        
         const app = Vue.createApp({
             data() {
+                console.log('data')
                 return {
-                    dispositivi: [],
-                    connected: false,
-                    disconnected: false
+                    dispositivi: []
                 };
             },
-            methods: {
-                statusTrigger() {
-                    let status = '';
-                    if (this.connected && !this.disconnected) {
-                        status = 'connected';
-                    } else if (!this.connected && this.disconnected) {
-                        status = 'disconnected';
-                    }
 
-                    axios.get(`http://localhost:3000/devices?status=${status}`)
-                        .then(response => {
-                            this.dispositivi = response.data.data;
-                        })
-                        .catch(error => console.log(error));
-                }
-            },
+        
+        methods: {
+        },
             mounted() {
-                // Inizializza la tabella caricando i dispositivi
+                console.log('mounted')
                 axios.get('http://localhost:3000/devices')
                     .then(response => {
                         this.dispositivi = response.data.data;
                     })
                     .catch(error => console.log(error))
-            },
-            watch: {
-                // Aggiorna la tabella quando cambia lo stato dei pulsanti
-                connected: 'statusTrigger',
-                disconnected: 'statusTrigger'
-            }
-        });
-
-        app.mount('#app');
-
-    </script>
+                },
+                
+            });
+            
+            app.mount('#app');
+            </script>
 
 </body>
 
