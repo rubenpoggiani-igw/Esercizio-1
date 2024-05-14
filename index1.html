@@ -50,8 +50,8 @@
     <!--barra di ricerca-->
     <div id=barra class="d-flex ms-auto align-self-center">
         <nav class="navbar bg-ligh">
-            <form class="d-flex ms-5" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <form action="http://localhost:3000/devices/search" class="d-flex ms-5" role="search">
+                <input name="name" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-primary" type="submit">Search</button>
             </form>
         </nav>
@@ -74,7 +74,7 @@
 
     <!--tabella-->
     <div id="app" class="p-5">
-        <table class="table table-primary border-primary">
+        <table class="table table-primary border-primary call=statusTrigger">
             <thead>
                 <tr>
                     <th data-field="name">
@@ -117,23 +117,22 @@
         function statusTrigger() {
             const connected = document.getElementById('btncheck1').checked;
             const disconnected = document.getElementById('btncheck2').checked;
-            
             let status = '';
 
             if (connected && !disconnected) {
-                status = 'connected';
+                status = connected;
             } else if (!connected && disconnected) {
                 status = 'disconnected';
             }
 
             axios.get(`http://localhost:3000/devices?status=${status}`)
-            .then(response => {
+                .then(response => {
                     app.dispositivi = response.data.data;
                 })
                 .catch(error => console.log(error));
         }
 
-        
+
         const app = Vue.createApp({
             data() {
                 console.log('data')
@@ -142,9 +141,9 @@
                 };
             },
 
-        
-        methods: {
-        },
+
+            methods: {
+            },
             mounted() {
                 console.log('mounted')
                 axios.get('http://localhost:3000/devices')
@@ -152,12 +151,12 @@
                         this.dispositivi = response.data.data;
                     })
                     .catch(error => console.log(error))
-                },
-                
-            });
-            
-            app.mount('#app');
-            </script>
+            },
+
+        });
+
+        app.mount('#app');
+    </script>
 
 </body>
 
