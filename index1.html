@@ -50,9 +50,9 @@
         <div class="d-flex mb-3 align-items-center">
             <input type="text" v-model="search" class="form-control me-2" placeholder="Search by name">
             <div class="btn-group">
-                <input type="checkbox" v-model="connected" @click="statusTrigger" class="btn-check" id="btncheck1">
+                <input type="checkbox" v-model="connected" @change="statusTrigger" class="btn-check" id="btncheck1">
                 <label class="btn btn-outline-success" for="btncheck1">Connected</label>
-                <input type="checkbox" v-model="disconnected" @click="statusTrigger" class="btn-check" id="btncheck2">
+                <input type="checkbox" v-model="disconnected" @change="statusTrigger" class="btn-check" id="btncheck2">
                 <label class="btn btn-outline-danger" for="btncheck2">Disconnected</label>
             </div>
         </div>
@@ -114,10 +114,11 @@
                 statusTrigger() {
                     const connected = this.connected;
                     const disconnected = this.disconnected;
+                    console.log(connected, disconnected)
                     let status = '';
 
                     if (connected && !disconnected) {
-                        status = 'connected';
+                        status = connected;
                     } else if (!connected && disconnected) {
                         status = 'disconnected';
                     }
