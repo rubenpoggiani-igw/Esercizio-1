@@ -50,13 +50,20 @@
         <div class="d-flex mb-3 align-items-center">
             <input type="text" v-model="search" class="form-control me-2" placeholder="Search by name">
             <div class="btn-group">
+                <!-- 
+                <input class="btn btn-outline-success" type="checkbox" id="connected" value="connected" value="" v-model="statusTrigger">
+                <label for="btncheck1">Connected</label>
+                <input class="btn btn-outline-success" type="checkbox" id="disconnected" value="disconnected" value="" v-model="statusTrigger">
+                <label for="btncheck2">Disconnected</label>
+                -->
+
                 <input type="checkbox" v-model="connected" @change="statusTrigger" class="btn-check" id="btncheck1">
                 <label class="btn btn-outline-success" for="btncheck1">Connected</label>
                 <input type="checkbox" v-model="disconnected" @change="statusTrigger" class="btn-check" id="btncheck2">
                 <label class="btn btn-outline-danger" for="btncheck2">Disconnected</label>
             </div>
         </div>
-        <table class="table table-primary border-primary call=statusTrigger">
+        <table class="table table-primary border-primary">
             <thead>
                 <tr>
                     <th data-field="name">
