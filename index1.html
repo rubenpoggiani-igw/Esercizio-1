@@ -22,17 +22,15 @@
                     class="rounded-pill" alt="LOGO" width="190" height="90">
             </div>
 
-            <div class="p-2 flex-shrink-1 d-flex flex-row w-25 me-5"><span
-                    class="align-self-center badge fs-5 ">Bentornato Utente</span>
+            <div class="p-2 flex-shrink-1 d-flex flex-row align-items-center me-5">
+                <span class="badge fs-5 text-white">Bentornato Utente</span>
                 <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ruben Poggiani">
                     <img src="https://www.keblog.it/wp-content/uploads/2017/10/foto-divertenti-animali-buffi-01.jpg "
-                        class="rounded-circle" alt="USER" width="100" height="90">
+                        class="rounded-circle ms-2" alt="USER" width="60" height="60">
+                </a>
             </div>
-            </a>
         </div>
     </div>
-    </div>
-
 
     <!--testo sotto l'header-->
     <div class="container">
@@ -47,61 +45,37 @@
         </h6>
     </div>
 
-    <!--barra di ricerca-->
-    <div id=barra class="d-flex ms-auto align-self-center">
-        <nav class="navbar bg-ligh">
-            <form action="http://localhost:3000/devices/search" class="d-flex ms-5" role="search">
-                <input name="name" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit">Search</button>
-            </form>
-        </nav>
-
-
-        <!--bottoni-->
-        <div id=bottoni class="d-grid gap-2 d-md-flex justify-content-md-end me-5 ms-auto align-self-center"
-            role="group" aria-label="Basic checkbox toggle button group">
-
-            <input type="checkbox" onclick="statusTrigger('connected')" class="btn-check" id="btncheck1"></input>
-            <label class="btn btn-outline-success" for="btncheck1">Connected</label>
-
-            <input type="checkbox" onclick="statusTrigger('disconnected')" class="btn-check" id="btncheck2"></input>
-            <label class="btn btn-outline-danger" for="btncheck2">Disconnected</label>
-
-
-        </div>
-    </div>
-
-
-    <!--tabella-->
+    <!--barra di ricerca e pulsanti-->
     <div id="app" class="p-5">
+        <div class="d-flex mb-3 align-items-center">
+            <input type="text" v-model="search" class="form-control me-2" placeholder="Search by name">
+            <div class="btn-group">
+                <input type="checkbox" v-model="connected" @click="statusTrigger" class="btn-check" id="btncheck1">
+                <label class="btn btn-outline-success" for="btncheck1">Connected</label>
+                <input type="checkbox" v-model="disconnected" @click="statusTrigger" class="btn-check" id="btncheck2">
+                <label class="btn btn-outline-danger" for="btncheck2">Disconnected</label>
+            </div>
+        </div>
         <table class="table table-primary border-primary call=statusTrigger">
             <thead>
                 <tr>
                     <th data-field="name">
-                        <span class="text-dark">
-                            name
-                        </span>
+                        <span class="text-dark">name</span>
                     </th>
                     <th data-field="vehicle">
-                        <span class="text-dark">
-                            vehicle
-                        </span>
+                        <span class="text-dark">vehicle</span>
                     </th>
                     <th data-field="status">
-                        <span class="text-dark">
-                            status
-                        </span>
+                        <span class="text-dark">status</span>
                     </th>
                     <th data-field="battery">
-                        <span class="text-dark">
-                            battery
-                        </span>
+                        <span class="text-dark">battery</span>
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <!--righe tabella-->
-                <tr v-for="dispositivo in dispositivi" :key="dispositivo.id">
+                <tr v-for="dispositivo in filteredDispositivi" :key="dispositivo.id">
                     <td>{{ dispositivo.name }}</td>
                     <td>{{ dispositivo.vehicle }}</td>
                     <td>{{ dispositivo.status }}</td>
@@ -111,48 +85,50 @@
         </table>
     </div>
 
-
     <!--prende i dati-->
     <script>
-        function statusTrigger() {
-            const connected = document.getElementById('btncheck1').checked;
-            const disconnected = document.getElementById('btncheck2').checked;
-            let status = '';
-
-            if (connected && !disconnected) {
-                status = connected;
-            } else if (!connected && disconnected) {
-                status = 'disconnected';
-            }
-
-            axios.get(`http://localhost:3000/devices?status=${status}`)
-                .then(response => {
-                    app.dispositivi = response.data.data;
-                })
-                .catch(error => console.log(error));
-        }
-
-
         const app = Vue.createApp({
             data() {
-                console.log('data')
                 return {
-                    dispositivi: []
+                    dispositivi: [],
+                    search: '',
+                    connected: false,
+                    disconnected: false
                 };
             },
-
-
-            methods: {
+            computed: {
+                filteredDispositivi() {
+                    return this.dispositivi.filter(dispositivo => {
+                        return dispositivo.name.toLowerCase().includes(this.search.toLowerCase());
+                    });
+                }
             },
             mounted() {
-                console.log('mounted')
                 axios.get('http://localhost:3000/devices')
                     .then(response => {
                         this.dispositivi = response.data.data;
                     })
                     .catch(error => console.log(error))
             },
+            methods: {
+                statusTrigger() {
+                    const connected = this.connected;
+                    const disconnected = this.disconnected;
+                    let status = '';
 
+                    if (connected && !disconnected) {
+                        status = 'connected';
+                    } else if (!connected && disconnected) {
+                        status = 'disconnected';
+                    }
+
+                    axios.get(`http://localhost:3000/devices?status=${status}`)
+                        .then(response => {
+                            this.dispositivi = response.data.data;
+                        })
+                        .catch(error => console.log(error));
+                }
+            }
         });
 
         app.mount('#app');
