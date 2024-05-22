@@ -103,6 +103,7 @@
                     disconnected: false
                 };
             },
+            // ricerca case-insensitive
             computed: {
                 filteredDispositivi() {
                     return this.dispositivi.filter(dispositivo => {
@@ -111,17 +112,28 @@
                 }
             },
             mounted() {
-                axios.get('http://localhost:3000/devices')
-                    .then(response => {
-                        this.dispositivi = response.data.data;
-                    })
-                    .catch(error => console.log(error))
+                // chiamata per ottenere tutti i dispositivi
+                this.fetchDevices();
             },
             methods: {
+                fetchDevices(status = '') {
+                    let url = 'http://localhost:3000/devices';
+                    if (status) {
+                        url += `?status=${status}`;
+                    }
+
+                    axios.get(url)
+                        .then(response => {
+                            this.dispositivi = response.data.data;
+                        })
+                        .catch(error => console.log(error));
+                },
+                // determina lo status connected o disconnected
                 statusTrigger() {
                     const connected = this.connected;
                     const disconnected = this.disconnected;
-                    console.log(connected, disconnected)
+                    // controllo il funzionamento dei filtri connected e disconnected
+                    console.log(connected, disconnected);
                     let status = '';
 
                     if (connected && !disconnected) {
@@ -129,18 +141,15 @@
                     } else if (!connected && disconnected) {
                         status = 'disconnected';
                     }
-
-                    axios.get(`http://localhost:3000/devices?status=${status}`)
-                        .then(response => {
-                            this.dispositivi = response.data.data;
-                        })
-                        .catch(error => console.log(error));
+                    // chiamata per ottenere i dispositivi in base ai filtri
+                    this.fetchDevices(status);
                 }
             }
         });
 
         app.mount('#app');
     </script>
+
 
 </body>
 
