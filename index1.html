@@ -10,7 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-
 </head>
 
 <body>
@@ -34,15 +33,9 @@
 
     <!--testo sotto l'header-->
     <div class="container">
-        <h1 class="text text-primary text-center ">
+        <h1 class="text text-primary text-center">
             GOOGLE DEVICE
         </h1>
-        <h6 class="text text-primary text-center ">
-            Questa è una tabella che serve per visualizzare i dispositivi aziendali. La tabella è divisa in 4 colonne
-            dove si possono vedere: nella prima colonna il nome del dispositivo, nella seconda colonna il numero di
-            serie, nella terza colonna se il dispositivo è connesso o meno e in fine nell'ultima colonna si vede lo
-            stato della batteria di ogni dispositivo.
-        </h6>
     </div>
 
     <!--barra di ricerca e pulsanti-->
@@ -50,46 +43,70 @@
         <div class="d-flex mb-3 align-items-center">
             <input type="text" v-model="search" class="form-control me-2" placeholder="Search by name">
             <div class="btn-group">
-                <!-- 
-                <input class="btn btn-outline-success" type="checkbox" id="connected" value="connected" value="" v-model="statusTrigger">
-                <label for="btncheck1">Connected</label>
-                <input class="btn btn-outline-success" type="checkbox" id="disconnected" value="disconnected" value="" v-model="statusTrigger">
-                <label for="btncheck2">Disconnected</label>
-                -->
-
                 <input type="checkbox" v-model="connected" @change="statusTrigger" class="btn-check" id="btncheck1">
                 <label class="btn btn-outline-success" for="btncheck1">Connected</label>
                 <input type="checkbox" v-model="disconnected" @change="statusTrigger" class="btn-check" id="btncheck2">
                 <label class="btn btn-outline-danger" for="btncheck2">Disconnected</label>
             </div>
         </div>
-        <table class="table table-primary border-primary">
+        <table class="table table-primary table-striped table-bordered border-primary">
             <thead>
                 <tr>
                     <th data-field="name">
-                        <span class="text-dark">name</span>
+                        <span class="text-dark text-uppercase">name:</span>
                     </th>
                     <th data-field="vehicle">
-                        <span class="text-dark">vehicle</span>
+                        <span class="text-dark text-uppercase">vehicle:</span>
                     </th>
                     <th data-field="status">
-                        <span class="text-dark">status</span>
+                        <span class="text-dark text-uppercase">status:</span>
                     </th>
                     <th data-field="battery">
-                        <span class="text-dark">battery</span>
+                        <span class="text-dark text-uppercase">battery:</span>
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <!--righe tabella-->
-                <tr v-for="dispositivo in filteredDispositivi" :key="dispositivo.id">
+                <tr v-for="dispositivo in paginatedDispositivi" :key="dispositivo.id">
                     <td>{{ dispositivo.name }}</td>
                     <td>{{ dispositivo.vehicle }}</td>
-                    <td>{{ dispositivo.status }}</td>
-                    <td>{{ dispositivo.battery }}</td>
+                    <td> <span v-if="dispositivo.status === 'connected'">✔️</span>
+                        <span v-else>❌</span>
+                    </td>
+                    <td>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                :class="{'bg-danger': dispositivo.battery < 25, 'bg-warning': dispositivo.battery >= 25 && dispositivo.battery < 75, 'bg-success': dispositivo.battery >= 75}"
+                                :style="{ width: dispositivo.battery + '%' }" :aria-valuenow="dispositivo.battery"
+                                aria-valuemin="0" aria-valuemax="100">
+                                {{ dispositivo.battery }}%
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
+        <ul class="pagination pagination-sm justify-content-end">
+            <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                <a class="page-link" href="#" @click.prevent="currentPage--"><span aria-hidden="true">&laquo;</span></a>
+            </li>
+            <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: currentPage === page }">
+                <a class="page-link" href="#" @click.prevent="currentPage = page">{{ page }}</a>
+            </li>
+            <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                <a class="page-link" href="#" @click.prevent="currentPage++"><span aria-hidden="true">&raquo;</span></a>
+            </li>
+        </ul>
+        <h6 class="text-muted text-center">
+            Questa è una tabella che serve per visualizzare i dispositivi aziendali. La tabella è divisa in 4 colonne
+            dove si possono vedere: nella prima colonna il nome del dispositivo, nella seconda colonna il numero di
+            serie, nella terza colonna se il dispositivo è connesso o meno e in fine nell'ultima colonna si vede lo
+            stato della batteria di ogni dispositivo.
+        </h6>
+    </div>
+    </div>
+
     </div>
 
     <!--prende i dati-->
@@ -100,17 +117,35 @@
                     dispositivi: [],
                     search: '',
                     connected: false,
-                    disconnected: false
+                    disconnected: false,
+                    perPage: 10,
+                    currentPage: 1
                 };
             },
-            // ricerca case-insensitive
             computed: {
+                // qua filtra i dispositivi in base al search e allo status
                 filteredDispositivi() {
                     return this.dispositivi.filter(dispositivo => {
-                        return dispositivo.name.toLowerCase().includes(this.search.toLowerCase());
+                        // ricerca case-insensitive
+                        const nameMatch = dispositivo.name.toLowerCase().includes(this.search.toLowerCase());
+                        const statusMatch = (!this.connected || dispositivo.status === 'connected') && (!this.disconnected || dispositivo.status !== 'connected');
+                        // mostra tutti i dispositivi se entrambi i bottoni sono attivi
+                        const showAll = this.connected && this.disconnected;
+                        return (nameMatch && statusMatch) || showAll;
                     });
+                },
+                paginatedDispositivi() {
+                    // calcola quanti dispositivi visualizzare
+                    const start = (this.currentPage - 1) * this.perPage;
+                    const end = start + this.perPage;
+                    return this.filteredDispositivi.slice(start, end);
+                },
+                totalPages() {
+                    // calcola quante pagine creare in base alla quantità di dispositivi
+                    return Math.ceil(this.filteredDispositivi.length / this.perPage);
                 }
             },
+
             mounted() {
                 // chiamata per ottenere tutti i dispositivi
                 this.fetchDevices();
@@ -132,8 +167,6 @@
                 statusTrigger() {
                     const connected = this.connected;
                     const disconnected = this.disconnected;
-                    // controllo il funzionamento dei filtri connected e disconnected
-                    console.log(connected, disconnected);
                     let status = '';
 
                     if (connected && !disconnected) {
@@ -149,7 +182,6 @@
 
         app.mount('#app');
     </script>
-
 
 </body>
 
