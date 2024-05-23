@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
 
     <style>
         body {
@@ -32,6 +34,7 @@
     </style>
 </head>
 
+
 <body>
     <!--header-->
     <div class="mb-2 bg-dark">
@@ -40,6 +43,7 @@
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiEndPkpxU-FDOQK0acJ6iuFECTI914xOelQ&s"
                     class="rounded-pill" alt="LOGO" width="140" height="60">
             </div>
+
 
             <div class="p-2 flex-shrink-1 d-flex flex-row align-items-center me-5">
                 <span class="badge fs-5 text-white text-decoration-underline">Bentornato Utente</span>
@@ -51,6 +55,7 @@
         </div>
     </div>
 
+
     <!--testo sotto l'header-->
     <div class="container">
         <h1 id="title" class="text display-1 text-dark text-center"><em>
@@ -58,7 +63,8 @@
             </em></h1>
     </div>
 
-    <!--barra di ricerca e pulsanti-->
+
+    <!--barra di ricerca e pulsanti filtri-->
     <div id="app" class="p-5">
         <div class="d-flex mb-3 align-items-center">
             <input type="text" v-model="search" class="form-control me-2" placeholder="Search by name">
@@ -68,7 +74,51 @@
                 <input type="checkbox" v-model="disconnected" @change="statusTrigger" class="btn-check" id="btncheck2">
                 <label class="btn btn-outline-danger" for="btncheck2">Disconnected</label>
             </div>
+
+            <!-- bottone per aggiungere elementi -->
+
+            <i type="button" id="add-item" class=" fa-solid fa-circle-plus fa-lg ms-4 " style="color: #005eff; "></i>
+
         </div>
+        <!-- Modale -->
+        <div class="modal fade" id="addItemModal" aria-labelledby="addItemModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addItemModalLabel">Add New Device</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form nuovo device -->
+                        <form id="addDeviceForm">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="vehicle" class="form-label">Vehicle</label>
+                                <input type="text" class="form-control" id="vehicle" name="vehicle" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Status</label>
+                                <select class="form-select" id="status" name="status" required>
+                                    <option value="connected">Connected</option>
+                                    <option value="disconnected">Disconnected</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="battery" class="form-label">Battery (%)</label>
+                                <input type="number" class="form-control" id="battery" name="battery" min="0" max="100"
+                                    required>
+                            </div>
+                            <button type="submit" class="btn btn-dark">Add Device</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <!--creazione tabella -->
         <table class="table table-secondary table-striped table-bordered border-dark">
             <thead>
@@ -87,6 +137,7 @@
                     </th>
                 </tr>
             </thead>
+
             <tbody>
                 <!--compilazione righe tabella-->
                 <tr v-for="dispositivo in paginatedDispositivi" :key="dispositivo.id">
@@ -111,6 +162,7 @@
                 </tr>
             </tbody>
         </table>
+
         <!-- impaginazione -->
         <ul class="pagination pagination-sm justify-content-end">
             <li class="page-item" :class="{ disabled: currentPage === 1 }">
@@ -123,6 +175,9 @@
                 <a class="page-link" href="#" @click.prevent="currentPage++"><span aria-hidden="true">&raquo;</span></a>
             </li>
         </ul>
+
+
+        <!-- testo in fondo alla pagina -->
         <h6 class="text-muted text-center"><em>
                 Questa è una tabella che serve per visualizzare i dispositivi aziendali. La tabella è divisa in 4
                 colonne
@@ -132,11 +187,11 @@
             </em></h6>
     </div>
 
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 
-    <!--prende i dati-->
     <script>
         const app = Vue.createApp({
             data() {
@@ -150,31 +205,24 @@
                 };
             },
             computed: {
-                // qua filtra i dispositivi in base alla ricerca e allo status
                 filteredDispositivi() {
                     return this.dispositivi.filter(dispositivo => {
-                        // ricerca case-insensitive
                         const nameMatch = dispositivo.name.toLowerCase().includes(this.search.toLowerCase());
                         const statusMatch = (!this.connected || dispositivo.status === 'connected') && (!this.disconnected || dispositivo.status !== 'connected');
-                        // mostra tutti i dispositivi se entrambi i bottoni sono attivi
                         const showAll = this.connected && this.disconnected;
                         return (nameMatch && statusMatch) || showAll;
                     });
                 },
                 paginatedDispositivi() {
-                    // calcola quanti dispositivi visualizzare
                     const start = (this.currentPage - 1) * this.perPage;
                     const end = start + this.perPage;
                     return this.filteredDispositivi.slice(start, end);
                 },
                 totalPages() {
-                    // calcola quante pagine creare in base alla quantità di dispositivi
                     return Math.ceil(this.filteredDispositivi.length / this.perPage);
                 }
             },
-
             mounted() {
-                // chiamata per ottenere tutti i dispositivi
                 this.fetchDevices();
             },
             methods: {
@@ -183,32 +231,38 @@
                     if (status) {
                         url += `?status=${status}`;
                     }
-
                     axios.get(url)
                         .then(response => {
                             this.dispositivi = response.data.data;
                         })
                         .catch(error => console.log(error));
                 },
-                // determina lo status connected o disconnected
                 statusTrigger() {
                     const connected = this.connected;
                     const disconnected = this.disconnected;
                     let status = '';
-
                     if (connected && !disconnected) {
                         status = connected;
                     } else if (!connected && disconnected) {
                         status = 'disconnected';
                     }
-                    // chiamata per ottenere i dispositivi in base ai filtri
                     this.fetchDevices(status);
                 }
             }
         });
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            const addItemButton = document.getElementById('add-item');
+            const addItemModal = new bootstrap.Modal(document.getElementById('addItemModal'));
+            addItemButton.addEventListener('click', function () {
+                addItemModal.show();
+            });
+        });
 
+        
         app.mount('#app');
     </script>
+
 
 </body>
 
