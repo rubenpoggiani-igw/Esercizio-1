@@ -12,10 +12,17 @@
 
 
     <style>
+        html, body {
+            height: 100%;
+        }
         body {
             background: rgb(255, 255, 255);
-            background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(121, 121, 121, 0.8909512761020881) 100%);
+            background:  linear-gradient(151deg, rgb(56 196 229 / 11%) 0%, rgb(255 255 255 / 89%) 100%);
             background-repeat: no-repeat
+        }
+
+        .main-header {
+            box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.1);
         }
 
         a.page-link {
@@ -31,13 +38,14 @@
             font-family: "Ubuntu", sans-serif;
             font-style: italic;
         }
+
     </style>
 </head>
 
 
 <body>
     <!--header-->
-    <div class="mb-2 bg-dark">
+    <div class="main-header mb-2 bg-light">
         <div class="d-flex flex-row">
             <div class="p-2 w-100">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiEndPkpxU-FDOQK0acJ6iuFECTI914xOelQ&s"
@@ -46,7 +54,7 @@
 
 
             <div class="p-2 flex-shrink-1 d-flex flex-row align-items-center me-5">
-                <span class="badge fs-5 text-white text-decoration-underline">Bentornato Utente</span>
+                <span class="badge fs-5 text-dark text-decoration-underline">Bentornato Utente</span>
                 <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ruben Poggiani">
                     <img src="https://www.keblog.it/wp-content/uploads/2017/10/foto-divertenti-animali-buffi-01.jpg"
                         class="rounded-circle ms-2" alt="USER" width="60" height="60">
@@ -67,7 +75,7 @@
     <!--barra di ricerca e pulsanti filtri-->
     <div id="app" class="p-5">
         <div class="d-flex mb-3 align-items-center">
-            <input type="text" v-model="search" class="form-control me-2" placeholder="Search by name">
+            <input type="text" v-model="search" class="form-control me-2" placeholder="Search by name" style="width: 260px; height: 35px" >
             <div class="btn-group">
                 <input type="checkbox" v-model="connected" @change="statusTrigger" class="btn-check" id="btncheck1">
                 <label class="btn btn-outline-success" for="btncheck1">Connected</label>
@@ -250,7 +258,7 @@
                 }
             }
         });
-        
+
         document.addEventListener('DOMContentLoaded', function () {
             const addItemButton = document.getElementById('add-item');
             const addItemModal = new bootstrap.Modal(document.getElementById('addItemModal'));
@@ -259,7 +267,7 @@
             });
         });
 
-        
+
         app.mount('#app');
     </script>
 
