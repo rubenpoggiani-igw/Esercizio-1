@@ -14,17 +14,27 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
-        html, body {
+        html,
+
+        body {
             height: 100%;
         }
+
         body {
-            background: rgb(255, 255, 255);
-            background:  linear-gradient(151deg, rgb(56 196 229 / 11%) 0%, rgb(255 255 255 / 89%) 100%);
+            background: rgb(183, 254, 255);
+            background: linear-gradient(243deg, rgba(183, 254, 255, 1) 0%, rgba(255, 150, 150, 0.5466561624649859) 100%);
             background-repeat: no-repeat
         }
 
+        /* body {
+            background-image: url(<https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwCVKro8vff3I_neXJ5yXo2AOdUCd4OctZTg&s);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        } */
+
         .main-header {
-            box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.1);
+            box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
         }
 
         a.page-link {
@@ -38,9 +48,19 @@
 
         * {
             font-family: "Ubuntu", sans-serif;
-       
+
         }
 
+        #add-item {
+            position: absolute;
+            right: 50px;
+
+
+        }
+
+        #table {
+            box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
+        }
     </style>
 </head>
 
@@ -69,15 +89,16 @@
     <!--testo sotto l'header-->
     <div class="container">
         <h1 id="title" class="text display-1 text-dark text-center">
-                GOOGLE DEVICE
-            </h1>
+            GOOGLE DEVICE
+        </h1>
     </div>
 
 
     <!--barra di ricerca e pulsanti filtri-->
     <div id="app" class="p-5">
         <div class="d-flex mb-3 align-items-center">
-            <input type="text" v-model="search" class="form-control me-2" placeholder="Search by name" style="width: 260px; height: 35px" >
+            <input type="text" v-model="search" class="form-control me-2" placeholder="Search by name"
+                style="width: 260px; height: 35px">
             <div class="btn-group">
                 <input type="checkbox" v-model="connected" @change="statusTrigger" class="btn-check" id="btncheck1">
                 <label class="btn btn-outline-success" for="btncheck1">Connected</label>
@@ -87,7 +108,7 @@
 
             <!-- bottone per aggiungere elementi -->
 
-            <i type="button" id="add-item" class=" fa-solid fa-circle-plus fa-lg ms-4 " style="color: #005eff; "></i>
+            <i type="button" id="add-item" class="fa-solid fa-circle-plus fa-lg " style="color: #005eff; "></i>
 
         </div>
         <!-- Modale -->
@@ -130,7 +151,7 @@
 
 
         <!--creazione tabella -->
-        <table class="table table-secondary table-striped table-bordered border-dark">
+        <table class="table table-secondary table-striped table-bordered border-dark" id="table">
             <thead>
                 <tr>
                     <th data-field="name" class="bg-dark">
@@ -151,13 +172,15 @@
             <tbody>
                 <!--compilazione righe tabella-->
                 <tr v-for="dispositivo in paginatedDispositivi" :key="dispositivo.id">
-                    <td><em>{{ dispositivo.name }}</em></td>
+                    <td>{{ dispositivo.name }}</td>
                     <td>{{ dispositivo.vehicle }}</td>
                     <td>
                         <span v-if="dispositivo.status === 'connected'">
-                            <i class="fa-solid fa-circle-check fa-xl" style="color: #19df16;"></i> </span>
+                            <i class="fa-solid fa-circle-check fa-xl" title="connected" style="color: #19df16;"></i>
+                        </span>
                         <span v-else>
-                            <i class="fa-solid fa-circle-xmark fa-xl" style="color: #ff0000;"></i> </span>
+                            <i class="fa-solid fa-circle-xmark fa-xl" title="disconnected" style="color: #ff0000;"></i>
+                        </span>
                     </td>
                     <td>
                         <div class="progress">
