@@ -21,20 +21,15 @@
         }
 
         body {
-            background: rgb(183, 254, 255);
-            background: linear-gradient(243deg, rgba(183, 254, 255, 1) 0%, rgba(255, 150, 150, 0.5466561624649859) 100%);
-            background-repeat: no-repeat
-        }
-
-        /* body {
-            background-image: url(<https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwCVKro8vff3I_neXJ5yXo2AOdUCd4OctZTg&s);
+            background-image: linear-gradient(to right top, #ffcece, #fed7df, #fce1ec, #faebf6, #faf4fc, #f9f5fd, #f8f5fe, #f7f6ff, #f1efff, #eae8ff, #e4e1ff, #dddaff);
             background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
-        } */
+        }
 
         .main-header {
             box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-image: url(https://cdn.pixabay.com/photo/2016/05/11/13/20/keyboard-1385706_1280.jpg) !important;
         }
 
         a.page-link {
@@ -42,24 +37,36 @@
         }
 
         .active a.page-link {
-            background: grey;
+            background: rgb(2, 2, 2);
             border-color: black;
         }
 
         * {
             font-family: "Ubuntu", sans-serif;
-
         }
 
         #add-item {
             position: absolute;
             right: 50px;
-
-
         }
 
         #table {
-            box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+            border-collapse: collapse;
+        }
+
+        #table th,
+        #table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        #column-status {
+            width: 40px;
+        }
+
+        img.rounded-circle {
+            border: 2px solid white;
         }
     </style>
 </head>
@@ -67,7 +74,7 @@
 
 <body>
     <!--header-->
-    <div class="main-header mb-2 bg-light">
+    <div class="main-header mb-2 bg-light" id="main">
         <div class="d-flex flex-row">
             <div class="p-2 w-100">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiEndPkpxU-FDOQK0acJ6iuFECTI914xOelQ&s"
@@ -76,7 +83,7 @@
 
 
             <div class="p-2 flex-shrink-1 d-flex flex-row align-items-center me-5">
-                <span class="badge fs-5 text-dark text-decoration-underline">Bentornato Utente</span>
+                <span class="badge fs-5 text-white text-decoration-underline">Bentornato Utente</span>
                 <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ruben Poggiani">
                     <img src="https://www.keblog.it/wp-content/uploads/2017/10/foto-divertenti-animali-buffi-01.jpg"
                         class="rounded-circle ms-2" alt="USER" width="60" height="60">
@@ -151,7 +158,7 @@
 
 
         <!--creazione tabella -->
-        <table class="table table-secondary table-striped table-bordered border-dark" id="table">
+        <table class="table table-secondary table-striped table-bordered border-dark table-hover" id="table">
             <thead>
                 <tr>
                     <th data-field="name" class="bg-dark">
@@ -160,7 +167,7 @@
                     <th data-field="vehicle" class="bg-dark">
                         <span class="text-white text-uppercase">vehicle:</span>
                     </th>
-                    <th data-field="status" class="bg-dark">
+                    <th data-field="status" id="column-status" class="bg-dark">
                         <span class="text-white text-uppercase">status:</span>
                     </th>
                     <th data-field="battery" class="bg-dark">
@@ -197,7 +204,7 @@
         </table>
 
         <!-- impaginazione -->
-        <ul class="pagination pagination-sm justify-content-end">
+        <ul id="impagination" class="pagination pagination-sm justify-content-end">
             <li class="page-item" :class="{ disabled: currentPage === 1 }">
                 <a class="page-link" href="#" @click.prevent="currentPage--"><span aria-hidden="true">&laquo;</span></a>
             </li>
@@ -211,13 +218,13 @@
 
 
         <!-- testo in fondo alla pagina -->
-        <h6 class="text-muted text-center"><em>
-                Questa è una tabella che serve per visualizzare i dispositivi aziendali. La tabella è divisa in 4
-                colonne
-                dove si possono vedere: nella prima colonna il nome del dispositivo, nella seconda colonna il numero di
-                serie, nella terza colonna se il dispositivo è connesso o meno e in fine nell'ultima colonna si vede lo
-                stato della batteria di ogni dispositivo.
-            </em></h6>
+        <h6 class="text-muted text-center">
+            Questa è una tabella che serve per visualizzare i dispositivi aziendali. La tabella è divisa in 4
+            colonne
+            dove si possono vedere: nella prima colonna il nome del dispositivo, nella seconda colonna il numero di
+            serie, nella terza colonna se il dispositivo è connesso o meno e in fine nell'ultima colonna si vede lo
+            stato della batteria di ogni dispositivo.
+        </h6>
     </div>
 
 
