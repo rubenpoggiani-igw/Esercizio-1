@@ -68,6 +68,22 @@
         img.rounded-circle {
             border: 2px solid white;
         }
+
+        #searchbar {
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        }
+
+        #truebutton {
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        }
+
+        #falsebutton {
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+        }
+
+        .page-item {
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+        }
     </style>
 </head>
 
@@ -104,13 +120,13 @@
     <!--barra di ricerca e pulsanti filtri-->
     <div id="app" class="p-5">
         <div class="d-flex mb-3 align-items-center">
-            <input type="text" v-model="search" class="form-control me-2" placeholder="Search by name"
+            <input type="text" id="searchbar" v-model="search" class="form-control me-2" placeholder="Search by name"
                 style="width: 260px; height: 35px">
             <div class="btn-group">
                 <input type="checkbox" v-model="connected" @change="statusTrigger" class="btn-check" id="btncheck1">
-                <label class="btn btn-outline-success" for="btncheck1">Connected</label>
+                <label class="btn btn-outline-success" id="truebutton" for="btncheck1">Connected</label>
                 <input type="checkbox" v-model="disconnected" @change="statusTrigger" class="btn-check" id="btncheck2">
-                <label class="btn btn-outline-danger" for="btncheck2">Disconnected</label>
+                <label class="btn btn-outline-danger" id="falsebutton" for="btncheck2">Disconnected</label>
             </div>
 
             <!-- bottone per aggiungere elementi -->
