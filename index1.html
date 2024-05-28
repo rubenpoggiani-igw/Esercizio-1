@@ -16,10 +16,10 @@
             height: 100%;
         }
 
-        body {
+        /* body {
             background-image: linear-gradient(to right top, #ffcece, #fed7df, #fce1ec, #faebf6, #faf4fc, #f9f5fd, #f8f5fe, #f7f6ff, #f1efff, #eae8ff, #e4e1ff, #dddaff);
             background-repeat: no-repeat;
-        }
+        } */
 
         .main-header {
             box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
@@ -87,6 +87,7 @@
     </style>
 </head>
 
+
 <body>
     <!--header-->
     <div class="main-header mb-2 bg-light" id="main">
@@ -95,7 +96,6 @@
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiEndPkpxU-FDOQK0acJ6iuFECTI914xOelQ&s"
                     class="rounded-pill" alt="LOGO" width="140" height="60">
             </div>
-
             <div class="p-2 flex-shrink-1 d-flex flex-row align-items-center me-5">
                 <span class="badge fs-5 text-white text-decoration-underline">Bentornato Utente</span>
                 <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ruben Poggiani">
@@ -106,6 +106,7 @@
         </div>
     </div>
 
+
     <!--testo sotto l'header-->
     <div class="container">
         <h1 id="title" class="text display-1 text-dark text-center">
@@ -113,11 +114,14 @@
         </h1>
     </div>
 
-    <!--barra di ricerca e pulsanti filtri-->
+
+    <!--barra di ricerca-->
     <div id="app" class="p-5">
         <div class="d-flex mb-3 align-items-center">
             <input type="text" id="searchbar" v-model="search" class="form-control me-2" placeholder="Search by name"
                 style="width: 260px; height: 35px">
+
+            <!-- bottoni filtri -->
             <div class="btn-group">
                 <input type="checkbox" v-model="connected" @change="statusTrigger" class="btn-check" id="btncheck1">
                 <label class="btn btn-outline-success" id="truebutton" for="btncheck1">Connected</label>
@@ -128,6 +132,7 @@
             <!-- bottone per aggiungere elementi -->
             <i type="button" id="add-item" class="fa-solid fa-circle-plus fa-lg" style="color: #005eff;"></i>
         </div>
+
 
         <!-- Modale -->
         <div class="modal fade" id="addItemModal" aria-labelledby="addItemModalLabel" aria-hidden="true">
@@ -161,12 +166,14 @@
                                 <input type="number" class="form-control" id="battery" v-model="newDevice.battery"
                                     min="0" max="100" required>
                             </div>
+                            <!-- bottone per aggiungere elementi -->
                             <button type="submit" class="btn btn-primary">Add Device</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <!--tabella dati-->
         <table id="table" class="table table-bordered border-primary table-striped table-hover">
@@ -188,8 +195,9 @@
                 </tr>
             </thead>
 
+
+            <!--compilazione righe tabella-->
             <tbody>
-                <!--compilazione righe tabella-->
                 <tr v-for="dispositivo in paginatedDispositivi" :key="dispositivo._id">
                     <td>{{ dispositivo.name }}</td>
                     <td>{{ dispositivo.vehicle }}</td>
@@ -245,6 +253,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
     <script>
         const app = Vue.createApp({
             data() {
@@ -263,26 +272,29 @@
                     }
                 };
             },
+
             computed: {
+                // filtro dispositivi
                 filteredDispositivi() {
                     return this.dispositivi.filter(dispositivo => {
-                        // Verifica se 'dispositivo' è definito e ha la proprietà 'name'
+                        // Verifica se 'dispositivo' ha la proprietà 'name'
                         if (dispositivo && dispositivo.name) {
                             const nameMatch = dispositivo.name.toLowerCase().includes(this.search.toLowerCase());
                             const statusMatch = (!this.connected || dispositivo.status === 'connected') && (!this.disconnected || dispositivo.status !== 'connected');
                             const showAll = this.connected && this.disconnected;
                             return (nameMatch && statusMatch) || showAll;
                         } else {
-                            return false; // Ignora i dispositivi che non hanno il campo 'name'
+                            return false;
                         }
                     });
                 },
-
+                // impaginazione dei dispositivi per pagina
                 paginatedDispositivi() {
                     const start = (this.currentPage - 1) * this.perPage;
                     const end = start + this.perPage;
                     return this.filteredDispositivi.slice(start, end);
                 },
+                // numero pagine
                 totalPages() {
                     return Math.ceil(this.filteredDispositivi.length / this.perPage);
                 }
@@ -291,6 +303,7 @@
                 this.fetchDevices();
             },
             methods: {
+                // recupera i dispositivi
                 fetchDevices(status = '') {
                     let url = 'http://localhost:3000/devices';
                     if (status) {
@@ -302,6 +315,7 @@
                         })
                         .catch(error => console.log(error));
                 },
+                // filtra i dispositivi
                 statusTrigger() {
                     const connected = this.connected;
                     const disconnected = this.disconnected;
@@ -313,6 +327,7 @@
                     }
                     this.fetchDevices(status);
                 },
+                // aggiunge i dispositivi
                 addDevice() {
                     axios.post('http://localhost:3000/devices', this.newDevice)
                         .then(response => {
@@ -327,6 +342,7 @@
                             alert('Failed to add device. Please try again.');
                         });
                 },
+                // elimina i dispositivi
                 deleteDevice(deviceId) {
                     axios.delete(`http://localhost:3000/devices/${deviceId}`)
                         .then(response => {
@@ -339,7 +355,7 @@
                 }
             }
         });
-
+        // visualizza il modale
         document.addEventListener('DOMContentLoaded', function () {
             const addItemButton = document.getElementById('add-item');
             const addItemModal = new bootstrap.Modal(document.getElementById('addItemModal'));
