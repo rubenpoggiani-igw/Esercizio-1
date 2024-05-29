@@ -16,6 +16,26 @@
             height: 100%;
         }
 
+        /* Definizione dell'animazione */
+        @keyframes animatedBackground {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+
+        /* Applicazione dell'animazione allo sfondo */
+        .main-header {
+            /* Altre proprietà del tuo sfondo */
+            background-image: linear-gradient(to right top, #990b0b, #2815d4, #db1162, #f015b5, #a119ce, #f9f5fd, #f8f5fe, #f7f6ff, #f1efff, #eae8ff, #e4e1ff, #dddaff);
+            background-repeat: no-repeat;
+            animation: animatedBackground 20s linear infinite;
+            /* Specifica l'animazione e il suo comportamento */
+        }
+
         /* body {
             background-image: linear-gradient(to right top, #ffcece, #fed7df, #fce1ec, #faebf6, #faf4fc, #f9f5fd, #f8f5fe, #f7f6ff, #f1efff, #eae8ff, #e4e1ff, #dddaff);
             background-repeat: no-repeat;
@@ -176,7 +196,7 @@
 
 
         <!--tabella dati-->
-        <table id="table" class="table table-bordered border-dark table-striped table-hover">
+        <table id="table" class="table  table-striped table-hover">
             <thead>
                 <tr>
                     <th data-field="name" class="bg-dark">
@@ -368,7 +388,7 @@
                 }
             }
         });
-        
+
         // visualizza il modale
         document.addEventListener('DOMContentLoaded', function () {
             const addItemButton = document.getElementById('add-item');
