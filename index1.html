@@ -35,9 +35,8 @@
             animation: animatedBackground 20s linear infinite; */
         }
 
-        #searchbar:hover {
-            transform: scale(1.05);
-            transition: transform 0.2s ease;
+        img.rounded-circle {
+            border: 2px solid white;
         }
 
         a.page-link {
@@ -53,11 +52,13 @@
             font-family: "Ubuntu", sans-serif;
         }
 
+        /* tasto + */
         #add-item {
             position: absolute;
             right: 50px;
         }
 
+        /* tabella */
         #table {
             box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
             border-collapse: collapse;
@@ -74,18 +75,40 @@
             vertical-align: middle;
         }
 
+        /* colonne tabella */
         #column-status {
             width: 40px;
         }
 
-        img.rounded-circle {
-            border: 2px solid white;
+        #column-delete {
+            width: 30px;
+        }
+
+        /* impaginazione */
+        .page-item {
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+        }
+
+        #pagination .page-item {
+            transition: transform 0.1s ease, box-shadow 0.3s ease;
+        }
+
+        #pagination .page-item:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* barra di ricerca */
+        #searchbar:hover {
+            transform: scale(1.05);
+            transition: transform 0.2s ease;
         }
 
         #searchbar {
             box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
         }
 
+        /* bottoni connected-disconnected */
         #truebutton {
             box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
         }
@@ -94,25 +117,35 @@
             box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
         }
 
-        
-        #column-delete {
-            width: 30px;
-        }
-        
-        .page-item {
-            box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+        .btn-check {
+            display: none;
         }
 
-        #pagination .page-item {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .btn {
+            position: relative;
+            overflow: hidden;
         }
 
-        #pagination .page-item:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 100%;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            transition: right 0.5s;
         }
 
-        
+        #btncheck1:checked+.btn-outline-success::before {
+            right: 0;
+            background-color: #198754;
+        }
+
+        #btncheck2:checked+.btn-outline-danger::before {
+            right: 0;
+            background-color: #dc3545;
+        }
     </style>
 </head>
 
@@ -126,7 +159,7 @@
                     class="rounded-pill" alt="LOGO" width="140" height="60">
             </div>
             <div class="p-2 flex-shrink-1 d-flex flex-row align-items-center me-5">
-                <span class="badge fs-5 text-white text-decoration-underline">Bentornato Utente</span>
+                <span class="badge fs-5 text-white">Bentornato Utente</span>
                 <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ruben Poggiani">
                     <img src="https://www.keblog.it/wp-content/uploads/2017/10/foto-divertenti-animali-buffi-01.jpg"
                         class="rounded-circle ms-2" alt="USER" width="60" height="60">
@@ -157,6 +190,8 @@
                 <input type="checkbox" v-model="disconnected" @change="statusTrigger" class="btn-check" id="btncheck2">
                 <label class="btn btn-outline-danger" id="falsebutton" for="btncheck2">Disconnected</label>
             </div>
+
+
 
             <!-- bottone per aggiungere elementi -->
             <i type="button" id="add-item" class="fa-solid fa-circle-plus fa-lg" style="color: #005eff;"></i>
@@ -258,7 +293,8 @@
         </table>
 
         <!-- impaginazione -->
-        <ul id="pagination" class="pagination pagination-sm justify-content-end" style="--bs-pagination-focus-box-shadow: none;">
+        <ul id="pagination" class="pagination pagination-sm justify-content-end"
+            style="--bs-pagination-focus-box-shadow: none;">
             <li class="page-item" :class="{ disabled: currentPage === 1 }">
                 <a class="page-link" href="#" @click.prevent="currentPage--"><span aria-hidden="true">&laquo;</span></a>
             </li>
