@@ -16,7 +16,6 @@
             height: 100%;
         }
 
-        /* Definizione dell'animazione */
         @keyframes animatedBackground {
             0% {
                 background-position: 0 0;
@@ -27,25 +26,13 @@
             }
         }
 
-        /* Applicazione dell'animazione allo sfondo */
-        .main-header {
-            /* Altre proprietà del tuo sfondo */
-            background-image: linear-gradient(to right top, #990b0b, #2815d4, #db1162, #f015b5, #a119ce, #f9f5fd, #f8f5fe, #f7f6ff, #f1efff, #eae8ff, #e4e1ff, #dddaff);
-            background-repeat: no-repeat;
-            animation: animatedBackground 20s linear infinite;
-            /* Specifica l'animazione e il suo comportamento */
-        }
-
-        /* body {
-            background-image: linear-gradient(to right top, #ffcece, #fed7df, #fce1ec, #faebf6, #faf4fc, #f9f5fd, #f8f5fe, #f7f6ff, #f1efff, #eae8ff, #e4e1ff, #dddaff);
-            background-repeat: no-repeat;
-        } */
-
         .main-header {
             box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
             background-size: 100%;
             background-repeat: no-repeat;
             background-image: url(https://cdn.pixabay.com/photo/2016/05/11/13/20/keyboard-1385706_1280.jpg) !important;
+            /* background-repeat: no-repeat;
+            animation: animatedBackground 20s linear infinite; */
         }
 
         a.page-link {
@@ -69,6 +56,11 @@
         #table {
             box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
             border-collapse: collapse;
+        }
+
+        .table-hover tbody tr:hover {
+            transform: scale(1.03);
+            transition: transform 0.2s ease;
         }
 
         #table th,
