@@ -35,6 +35,11 @@
             animation: animatedBackground 20s linear infinite; */
         }
 
+        #searchbar:hover {
+            transform: scale(1.05);
+            transition: transform 0.2s ease;
+        }
+
         a.page-link {
             color: black;
         }
@@ -89,13 +94,25 @@
             box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
         }
 
+        
+        #column-delete {
+            width: 30px;
+        }
+        
         .page-item {
             box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
         }
 
-        #column-delete {
-            width: 30px;
+        #pagination .page-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
+        #pagination .page-item:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        
     </style>
 </head>
 
@@ -241,7 +258,7 @@
         </table>
 
         <!-- impaginazione -->
-        <ul id="impagination" class="pagination pagination-sm justify-content-end">
+        <ul id="pagination" class="pagination pagination-sm justify-content-end" style="--bs-pagination-focus-box-shadow: none;">
             <li class="page-item" :class="{ disabled: currentPage === 1 }">
                 <a class="page-link" href="#" @click.prevent="currentPage--"><span aria-hidden="true">&laquo;</span></a>
             </li>
