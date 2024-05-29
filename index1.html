@@ -288,20 +288,30 @@
                         }
                     });
                 },
+
                 // impaginazione dei dispositivi per pagina
                 paginatedDispositivi() {
                     const start = (this.currentPage - 1) * this.perPage;
                     const end = start + this.perPage;
                     return this.filteredDispositivi.slice(start, end);
                 },
+
                 // numero pagine
                 totalPages() {
                     return Math.ceil(this.filteredDispositivi.length / this.perPage);
                 }
             },
+
+            watch: {
+                search() {
+                    this.currentPage = 1;
+                }
+            },
+
             mounted() {
                 this.fetchDevices();
             },
+
             methods: {
                 // recupera i dispositivi
                 fetchDevices(status = '') {
@@ -315,7 +325,8 @@
                         })
                         .catch(error => console.log(error));
                 },
-                // filtra i dispositivi
+
+                // filtro per i dispositivi
                 statusTrigger() {
                     const connected = this.connected;
                     const disconnected = this.disconnected;
@@ -326,7 +337,9 @@
                         status = 'disconnected';
                     }
                     this.fetchDevices(status);
+                    this.currentPage = 1;
                 },
+
                 // aggiunge i dispositivi
                 addDevice() {
                     axios.post('http://localhost:3000/devices', this.newDevice)
@@ -334,12 +347,11 @@
                             this.dispositivi.push(response.data.data);
                             this.newDevice = { name: '', vehicle: '', status: 'connected', battery: 0 };
                             const addItemModal = new bootstrap.Modal(document.getElementById('addItemModal'));
-                            addItemModal.hide();
+                            this.$addItemModal.hide();
                             this.fetchDevices();
                         })
                         .catch(error => {
                             console.error(error);
-                            alert('Failed to add device. Please try again.');
                         });
                 },
                 // elimina i dispositivi
@@ -355,6 +367,7 @@
                 }
             }
         });
+        
         // visualizza il modale
         document.addEventListener('DOMContentLoaded', function () {
             const addItemButton = document.getElementById('add-item');
@@ -362,6 +375,7 @@
             addItemButton.addEventListener('click', function () {
                 addItemModal.show();
             });
+            app.config.globalProperties.$addItemModal = addItemModal;
         });
 
         app.mount('#app');
