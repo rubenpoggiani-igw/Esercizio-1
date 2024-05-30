@@ -30,7 +30,6 @@
         .main-header {
             box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
             background-size: 100%;
-            background-repeat: no-repeat;
             background-image: url(https://cdn.pixabay.com/photo/2016/05/11/13/20/keyboard-1385706_1280.jpg) !important;
             background-repeat: no-repeat;
             animation: animatedBackground 15s linear infinite alternate;
@@ -203,10 +202,10 @@
 
             <!-- bottoni filtri -->
             <div class="btn-group">
-                <input type="checkbox" v-model="connected" @change="statusTrigger" class="btn-check" id="btncheck1">
                 <label class="btn btn-outline-success" id="truebutton" for="btncheck1">Connected</label>
-                <input type="checkbox" v-model="disconnected" @change="statusTrigger" class="btn-check" id="btncheck2">
+                <input type="checkbox" v-model="connected" @change="statusTrigger" class="btn-check" id="btncheck1">
                 <label class="btn btn-outline-danger" id="falsebutton" for="btncheck2">Disconnected</label>
+                <input type="checkbox" v-model="disconnected" @change="statusTrigger" class="btn-check" id="btncheck2">
             </div>
 
             <!-- bottone per aggiungere elementi -->
