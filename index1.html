@@ -170,13 +170,22 @@
 
         /* grafico a ciambella */
         .chart-container {
-            width: 50%;
+            width: 65%;
             margin: 0 auto;
+            margin-left: +63%;
         }
 
         .chart-container canvas {
             width: 100%;
             height: auto;
+        }
+
+        #graphic-title {
+            margin-left: -80%;
+        }
+
+        p.text-center {
+           margin-top: 120px;
         }
     </style>
 
@@ -212,7 +221,9 @@
 
     <!-- grafico a ciambella -->
     <div class="container my-4">
-        <h3 class="text-center">Stato dei Dispositivi</h3>
+        <h3 id="graphic-title" class="text-center fs-1">Stato dei Dispositivi</h3>
+        <p id="graphic-title" class="text-center">In questo grafico vengono visualizzati il numero di dispositivi per
+            ogni tipo di stato della batteria</p>
         <div class="chart-container">
             <canvas id="batteryStatusChart"></canvas>
         </div>
@@ -443,7 +454,6 @@
 
             mounted() {
                 this.fetchDevices().then(() => {
-                    this.createBatteryStatusChart();
                 });
             },
 
@@ -476,7 +486,7 @@
                     this.currentPage = 1;
                 },
 
-                 // aggiunge i dispositivi
+                // aggiunge i dispositivi
                 addDevice() {
                     axios.post('http://localhost:3000/devices', this.newDevice)
                         .then(response => {
