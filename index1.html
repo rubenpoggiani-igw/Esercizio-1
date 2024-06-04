@@ -170,26 +170,13 @@
 
         /* grafico a ciambella */
         .chart-container {
-            width: 50%;
-            margin: 0 auto;
-            margin-left: +70%;
-            margin-top: -23%;
-        }
-
-        .chart-container canvas {
-            width: 100%;
-            height: auto;
+            width: 30%;
         }
 
         /* titolo e sottotitolo */
         #graphic-title {
             margin-left: -65%;
         }
-
-        p.text-center {
-            margin-top: 40px;
-        }
-
 
         /* offcanvas */
         #offcanvasResponsive {
@@ -257,26 +244,23 @@
                         </a>
                     </p>
                 </div>
-
-
-
             </div>
-
         </div>
     </div>
     </div>
 
     <!-- grafico a ciambella e titoli -->
-    <div class="container my-4">
-
+    <div class="container my-4 d-flex align-items-center">
         <!-- titolo e sottotitolo -->
-        <h3 id="graphic-title" class="text-center fs-1">Stato dei Dispositivi</h3>
-        <p id="graphic-title" class="text-center">In questo grafico vengono visualizzati il numero di dispositivi per
-            ogni tipo di stato della batteria.<br>Premendo i vari status di batteria nella legenda possiamo decidere
-            quali vedere e quali rimuovere dal graficio.<br> <br>Nella pagina troviamo la possibilità di filtrare i
-            dispositivi per lo stato di connessione.<br> <br>Inoltre troviamo una barra di ricerca per eseguire una
-            ricerca per nome.<br> <br>Sulla destra troviamo un pulsante blu che serve per aggiungere dei nuovi
-            dispositivi.</p>
+        <div class="text-wrapper  ">
+            <h3 class="text-center fs-1">Stato dei Dispositivi</h3>
+            <p class="text-center">In questo grafico vengono visualizzati il numero di dispositivi per
+                ogni tipo di stato della batteria.<br>Premendo i vari status di batteria nella legenda possiamo decidere
+                quali vedere e quali rimuovere dal graficio.<br> <br>Nella pagina troviamo la possibilità di filtrare i
+                dispositivi per lo stato di connessione.<br> <br>Inoltre troviamo una barra di ricerca per eseguire una
+                ricerca per nome.<br> <br>Sulla destra troviamo un pulsante blu che serve per aggiungere dei nuovi
+                dispositivi.</p>
+        </div>
         <div class="chart-container">
             <canvas id="batteryStatusChart"></canvas>
         </div>
