@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
@@ -76,7 +77,7 @@
         }
 
         .table-hover tbody tr:hover {
-            transform: scale(1.03);
+            transform: scale(1.02);
             transition: transform 0.2s ease;
         }
 
@@ -170,9 +171,10 @@
 
         /* grafico a ciambella */
         .chart-container {
-            width: 65%;
+            width: 50%;
             margin: 0 auto;
-            margin-left: +63%;
+            margin-left: +70%;
+            margin-top: -23%;
         }
 
         .chart-container canvas {
@@ -180,18 +182,16 @@
             height: auto;
         }
 
+        /* titolo e sottotitolo */
         #graphic-title {
-            margin-left: -80%;
+            margin-left: -65%;
         }
 
         p.text-center {
-           margin-top: 120px;
+            margin-top: 40px;
         }
     </style>
 
-    </style>
-
-    </style>
 </head>
 
 <body>
@@ -212,18 +212,15 @@
         </div>
     </div>
 
-    <!-- titolo -->
-    <!-- <div class="container">
-        <h1 id="title" class="text display-1 text-dark text-center">
-            GOOGLE DEVICE
-        </h1>
-    </div> -->
-
     <!-- grafico a ciambella -->
     <div class="container my-4">
         <h3 id="graphic-title" class="text-center fs-1">Stato dei Dispositivi</h3>
         <p id="graphic-title" class="text-center">In questo grafico vengono visualizzati il numero di dispositivi per
-            ogni tipo di stato della batteria</p>
+            ogni tipo di stato della batteria.<br>Premendo i vari status di batteria nella legenda possiamo decidere
+            quali vedere e quali rimuovere dal graficio.<br> <br>Nella pagina troviamo la possibilità di filtrare i
+            dispositivi per lo stato di connessione.<br> <br>Inoltre troviamo una barra di ricerca per eseguire una
+            ricerca per nome.<br> <br>Sulla destra troviamo un pulsante blu che serve per aggiungere dei nuovi
+            dispositivi.</p>
         <div class="chart-container">
             <canvas id="batteryStatusChart"></canvas>
         </div>
@@ -359,7 +356,8 @@
         <h6 class="text-muted text-center">
             Questa è una tabella che serve per visualizzare i dispositivi aziendali. La tabella è divisa in 4 colonne
             dove si possono vedere: nella prima colonna il nome del dispositivo, nella seconda colonna il numero di
-            serie, nella terza colonna se il dispositivo è connesso o meno e in fine nell'ultima colonna si vede lo
+            serie, nella terza colonna se il dispositivo è connesso o disconnesso e in fine nell'ultima colonna si vede
+            lo
             stato della batteria di ogni dispositivo.
         </h6>
     </div>
@@ -425,7 +423,6 @@
                         medium: 0,
                         low: 0
                     };
-
                     this.dispositivi.forEach(dispositivo => {
                         if (dispositivo.battery >= 75) {
                             batteryLevels.charged++;
