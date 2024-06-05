@@ -278,7 +278,8 @@
             </div>
 
             <!-- bottone per aggiungere elementi -->
-            <i type="button" id="add-item" class="fa-solid fa-circle-plus fa-lg" style="color: #005eff;"></i>
+            <i type="button" id="add-item" class="fa-solid fa-circle-plus fa-lg" data-bs-toggle="tooltip"
+                title="Aggiungi nuovo dispositivo" style="color: #005eff;"></i>
         </div>
 
         <!-- Modale -->
@@ -515,6 +516,18 @@
 
             methods: {
 
+                Toast: Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                }),
+
                 // recupera i dispositivi
                 fetchDevices(status = '') {
                     let url = 'http://localhost:3000/devices';
@@ -552,18 +565,15 @@
                             this.fetchDevices();
 
                             // SweetAlert2 alert aggiunto nuovo dispositivo
-                            Swal.fire({
-                                title: 'Successo!',
-                                text: 'Il nuovo dispositivo è stato caricato.',
+                            this.Toast.fire({
                                 icon: 'success',
-                                confirmButtonText: 'Ok'
+                                title: 'Il nuovo dispositivo è stato caricato.'
                             });
                         })
                         .catch(error => {
                             console.error(error);
                         });
                 },
-
                 // elimina i dispositivi
                 deleteDevice(deviceId) {
                     axios.delete(`http://localhost:3000/devices/${deviceId}`)
@@ -574,18 +584,15 @@
                             }
 
                             // SweetAlert2 alert rimosso un dispositivo
-                            Swal.fire({
-                                title: 'Rimosso!',
-                                text: 'Il dispositivo è stato rimosso.',
+                            this.Toast.fire({
                                 icon: 'success',
-                                confirmButtonText: 'Ok'
+                                title: 'Il dispositivo è stato rimosso.'
                             });
                         })
                         .catch(error => {
                             console.error(error);
                         });
                 },
-
                 // crea il grafico a ciambella
                 createBatteryStatusChart() {
                     const ctx = document.getElementById('batteryStatusChart').getContext('2d');
