@@ -477,7 +477,7 @@
                         low: 0
                     };
                     this.dispositivi.forEach(dispositivo => {
-                        if(typeof(dispositivo) != 'undefined')
+                        if (typeof (dispositivo) != 'undefined')
                             if (dispositivo.battery >= 75) {
                                 batteryLevels.charged++;
                             } else if (dispositivo.battery >= 25 && dispositivo.battery < 75) {
