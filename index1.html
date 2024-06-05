@@ -212,8 +212,8 @@
                 </a>
             </div>
 
-            <!-- bottone per il canvas -->
-            <button class="btn" id="canvasbutton">
+            <!-- bottone per il offcanvas -->
+            <button class="btn" id="offcanvasbutton">
                 <i class="fas fa-bars fa-xl" style="color: #ffffff;"></i>
             </button>
 
@@ -247,7 +247,7 @@
             </div>
         </div>
     </div>
-    </div>
+
 
     <!-- grafico a ciambella e titoli -->
     <div class="container my-4 d-flex align-items-center">
@@ -424,11 +424,11 @@
         document.addEventListener('DOMContentLoaded', function () {
             var myOffcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasResponsive'));
 
-            document.getElementById('canvasbutton').addEventListener('click', function () {
+            document.getElementById('offcanvasbutton').addEventListener('click', function () {
                 myOffcanvas.toggle();
             });
         });
-
+        // app di vue
         const app = Vue.createApp({
             data() {
                 return {
@@ -448,6 +448,7 @@
             },
 
             computed: {
+
                 // filtro dispositivi
                 filteredDispositivi() {
                     return this.dispositivi.filter(dispositivo => {
