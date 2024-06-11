@@ -35,6 +35,13 @@
             animation: animatedBackground 15s linear infinite alternate;
         }
 
+        .main-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 2000;
+        }
+
         /* immagine profile */
         img.rounded-circle {
             border: 2px solid white;
@@ -186,19 +193,6 @@
 
         @media only screen and (device-width: 430px) and (device-height: 932px) {
 
-            .btn-outline-success,
-            .btn-outline-danger {
-                font-size: 0.8rem;
-                padding: 0.25rem 0.5rem;
-            }
-
-
-            #dashboard {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
             #table th,
             #table td {
                 font-size: 0.8rem;
@@ -215,13 +209,6 @@
                 font-size: 0.8rem;
                 padding: 0.25rem 0.5rem;
             }
-
-            .filter-buttons-container {
-                display: flex;
-                justify-content: center;
-                margin-top: 10px;
-            }
-
 
             .container.my-4 {
                 display: flex;
@@ -483,7 +470,8 @@
             Questa è una tabella che serve per visualizzare i dispositivi aziendali. La tabella è divisa in 5 colonne
             dove si possono vedere: nella prima colonna il nome del dispositivo, nella seconda colonna il numero di
             serie, nella terza colonna se il dispositivo è connesso o disconnesso, nella quarta si vede lo
-            stato della batteria di ogni dispositivo e in fine nell'ultima si ha la possibilità di rimuovere i dispositivi.
+            stato della batteria di ogni dispositivo e in fine nell'ultima si ha la possibilità di rimuovere i
+            dispositivi.
         </h6>
     </div>
 
