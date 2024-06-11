@@ -171,7 +171,7 @@
             width: 30%;
         }
 
-        /* titolo e sottotitolo */
+        /* titolo e grafico*/
         #graphictitle {
             margin-top: 90px;
         }
@@ -189,6 +189,11 @@
 
         .offcanvas-body p {
             margin: 20px 0;
+        }
+
+        /* modale */
+        #modale {
+            margin-top: 100px;
         }
 
         @media only screen and (device-width: 430px) and (device-height: 932px) {
@@ -350,13 +355,13 @@
             </div>
 
             <!-- bottone per aggiungere elementi -->
-            <i type="button" id="add-item" class="fa-solid fa-circle-plus fa-lg" data-bs-toggle="tooltip"
+            <i type="button" id="add-item" class="fa-solid fa-file-circle-plus fa-lg" data-bs-toggle="tooltip"
                 title="Aggiungi nuovo dispositivo" style="color: #005eff;"></i>
         </div>
 
         <!-- Modale -->
         <div class="modal fade" id="addItemModal" aria-labelledby="addItemModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div id="modale" class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addItemModalLabel">Add New Device</h5>
