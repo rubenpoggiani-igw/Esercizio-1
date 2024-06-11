@@ -184,12 +184,11 @@
             margin: 20px 0;
         }
 
-        @media (max-width: 768px) {
+        @media only screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) {
 
             #table th,
             #table td {
                 font-size: 0.8rem;
-                padding: 0.5rem;
             }
 
             .btn-outline-success,
@@ -290,8 +289,8 @@
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiEndPkpxU-FDOQK0acJ6iuFECTI914xOelQ&s"
                     class="rounded-pill" alt="LOGO" width="140" height="60">
             </div>
-            <div class="p-2 flex-shrink-1 d-flex flex-row align-items-center me-5">
-                <span class="badge fs-5 text-white">Bentornato Utente</span>
+            <div class=" flex-shrink-1 d-flex flex-row align-items-center ">
+                <span id="userwelcome" class="badge fs-5 text-white">Bentornato Utente</span>
                 <a data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ruben Poggiani">
                     <img src="https://www.keblog.it/wp-content/uploads/2017/10/foto-divertenti-animali-buffi-01.jpg"
                         class="rounded-circle ms-2" alt="USER" width="60" height="60">
@@ -486,11 +485,10 @@
 
         <!-- testo in fondo alla pagina -->
         <h6 class="text-muted text-center">
-            Questa è una tabella che serve per visualizzare i dispositivi aziendali. La tabella è divisa in 4 colonne
+            Questa è una tabella che serve per visualizzare i dispositivi aziendali. La tabella è divisa in 5 colonne
             dove si possono vedere: nella prima colonna il nome del dispositivo, nella seconda colonna il numero di
-            serie, nella terza colonna se il dispositivo è connesso o disconnesso e in fine nell'ultima colonna si vede
-            lo
-            stato della batteria di ogni dispositivo.
+            serie, nella terza colonna se il dispositivo è connesso o disconnesso, nella quarta si vede lo
+            stato della batteria di ogni dispositivo e in fine nell'ultima si ha la possibilità di rimuovere i dispositivi.
         </h6>
     </div>
 
