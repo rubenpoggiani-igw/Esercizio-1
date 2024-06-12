@@ -198,6 +198,21 @@
 
         @media only screen and (device-width: 430px) and (device-height: 932px) {
 
+            #offcanvasResponsive {
+                width: 100%;
+            }
+
+            .offcanvas-body {
+                flex-direction: column-reverse;
+                /* Posiziona l'immagine di profilo sopra i link */
+                align-items: center;
+            }
+
+            .offcanvas-body p {
+                margin: 20px 0;
+            }
+
+
             #table th,
             #table td {
                 font-size: 0.8rem;
@@ -263,6 +278,7 @@
                 left: 50% !important;
                 transform: translate(-50%) !important;
             }
+            
         }
     </style>
 
@@ -499,6 +515,7 @@
 
     <script>
         // offcanvas
+        
         document.addEventListener('DOMContentLoaded', function () {
             var myOffcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasResponsive'));
 
